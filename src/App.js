@@ -1,24 +1,35 @@
-function ProductCategoryRow({ category }) {
+const PRODUCTS = [
+    { category: "Fruits", price: "1 €", stocked: true, name: "Pomme" },
+    { category: "Fruits", price: "1 €", stocked: true, name: "Fruit du dragon" },
+    { category: "Fruits", price: "2 €", stocked: false, name: "Fruit de la passion" },
+    { category: "Légumes", price: "2 €", stocked: true, name: "Épinard" },
+    { category: "Légumes", price: "4 €", stocked: false, name: "Citrouille" },
+    { category: "Légumes", price: "1 €", stocked: true, name: "Petits pois" }
+];
+
+function App() {
+    return <FilterableProductTable products={PRODUCTS} />;
+}
+
+function FilterableProductTable({ products }) {
     return (
-        <tr>
-            <th colSpan="2">
-                {category}
-            </th>
-        </tr>
+        <div>
+            <SearchBar />
+            <ProductTable products={products} />
+        </div>
     );
 }
 
-function ProductRow({ product }) {
-    const name = product.stocked ? product.name :
-        <span style={{ color: 'red' }}>
-      {product.name}
-    </span>;
-
+function SearchBar() {
     return (
-        <tr>
-            <td>{name}</td>
-            <td>{product.price}</td>
-        </tr>
+        <form>
+            <input type="text" placeholder="Recherche..." />
+            <label>
+                <input type="checkbox" />
+                {' '}
+                N’afficher que les produits en stock
+            </label>
+        </form>
     );
 }
 
@@ -55,39 +66,28 @@ function ProductTable({ products }) {
     );
 }
 
-function SearchBar() {
+function ProductCategoryRow({ category }) {
     return (
-        <form>
-            <input type="text" placeholder="Recherche..." />
-            <label>
-                <input type="checkbox" />
-                {' '}
-                N’afficher que les produits en stock
-            </label>
-        </form>
+        <tr>
+            <th colSpan="2">
+                {category}
+            </th>
+        </tr>
     );
 }
 
-function FilterableProductTable({ products }) {
+function ProductRow({ product }) {
+    const name = product.stocked ? product.name :
+        <span style={{ color: 'red' }}>
+      {product.name}
+    </span>;
+
     return (
-        <div>
-            <SearchBar />
-            <ProductTable products={products} />
-        </div>
+        <tr>
+            <td>{name}</td>
+            <td>{product.price}</td>
+        </tr>
     );
-}
-
-const PRODUCTS = [
-    { category: "Fruits", price: "1 €", stocked: true, name: "Pomme" },
-    { category: "Fruits", price: "1 €", stocked: true, name: "Fruit du dragon" },
-    { category: "Fruits", price: "2 €", stocked: false, name: "Fruit de la passion" },
-    { category: "Légumes", price: "2 €", stocked: true, name: "Épinard" },
-    { category: "Légumes", price: "4 €", stocked: false, name: "Citrouille" },
-    { category: "Légumes", price: "1 €", stocked: true, name: "Petits pois" }
-];
-
-function App() {
-    return <FilterableProductTable products={PRODUCTS} />;
 }
 
 export default App;
